@@ -1,4 +1,5 @@
 ﻿using Identity.Constants;
+using Identity.Db.Providers;
 
 namespace Identity.Options
 {
@@ -49,5 +50,11 @@ namespace Identity.Options
         public bool MandatoryNumbers { get; set; } = true;
         public bool AllowPartOfEmail { get; set; } = false;
         public string AllowSpecialCharacters { get; set; } = ".,/?|%$#*&_";
+    }
+
+    public class IdentityDatabase
+    {
+        public string ConnectionString { get; set; }
+        public IDbProvider Privider { get; set; }
     }
 }
