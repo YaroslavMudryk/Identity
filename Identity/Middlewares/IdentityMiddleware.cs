@@ -1,31 +1,30 @@
 ﻿using Identity.Constants;
-using Identity.Models;
-using Identity.Services;
-using Microsoft.AspNetCore.Builder;
+using Identity.Options;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Options;
 
 namespace Identity.Middlewares
 {
     public class IdentityMiddleware
     {
         private readonly IdentityOptions _options;
-        private readonly IIdentityService _identityService;
+        private readonly IdentityFeatures _features;
+        private readonly IdentityRoutes _routes;
+
         private readonly RequestDelegate _next;
 
-        public IdentityMiddleware(RequestDelegate next, /*IdentityOptions options,*/ IIdentityService identityService)
+        public IdentityMiddleware(RequestDelegate next, IOptions<IdentityOptions> options)
         {
             _next = next;
-            _options = new IdentityOptions
-            {
-                IsAvailableRefresh = true,
-                RefreshPath = EndpointsConstants.RefreshEndpoint
-            };
-            _identityService = identityService;
+            _options = options.Value;
+            _routes = options.Value.Routes;
+            _features = options.Value.Features;
+            SetupDefaultRoutesIfNeeded();
         }
 
         public async Task InvokeAsync(HttpContext httpContext)
         {
-            if (_options.IsAvailableRefresh && httpContext.Request.Path == _options.RefreshPath)
+            if (_features.IsAvailableRefreshToken && httpContext.Request.Path == _routes.RefreshRoute)
             {
                 httpContext.Response.StatusCode = 200;
                 await httpContext.Response.WriteAsync("Success");
@@ -35,13 +34,11 @@ namespace Identity.Middlewares
                 await _next.Invoke(httpContext);
             }
         }
-    }
 
-    public static class IdentityMiddlewareExtensions
-    {
-        public static void UseIdentityHandler(this IApplicationBuilder builder)
+
+        private void SetupDefaultRoutesIfNeeded()
         {
-            builder.UseMiddleware<IdentityMiddleware>();
+            _routes.RefreshRoute = _routes.RefreshRoute ?? EndpointsConstants.RefreshEndpoint;
         }
     }
 }
