@@ -10,6 +10,7 @@ namespace Identity.Middlewares
         private readonly IdentityOptions _options;
         private readonly IdentityFeatures _features;
         private readonly IdentityRoutes _routes;
+        private readonly IdentityAccount _account;
 
         private readonly RequestDelegate _next;
 
@@ -19,6 +20,7 @@ namespace Identity.Middlewares
             _options = options.Value;
             _routes = options.Value.Routes;
             _features = options.Value.Features;
+            _account = options.Value.Account;
             SetupDefaultRoutesIfNeeded();
         }
 
