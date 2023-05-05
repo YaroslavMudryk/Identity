@@ -1,4 +1,4 @@
-﻿namespace Identity.Services
+﻿namespace Identity.Services.Interfaces
 {
     public interface IIdentityService
     {

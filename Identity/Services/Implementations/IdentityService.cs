@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using Identity.Services.Interfaces;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
-namespace Identity.Services
+namespace Identity.Services.Implementations
 {
     public class IdentityService : IIdentityService
     {

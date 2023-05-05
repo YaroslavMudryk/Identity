@@ -1,7 +1,8 @@
 ﻿using Identity.Db.Context;
 using Identity.Db.Providers;
 using Identity.Options;
-using Identity.Services;
+using Identity.Services.Implementations;
+using Identity.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
