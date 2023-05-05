@@ -17,14 +17,14 @@ namespace Identity
             });
 
             services.AddHttpContextAccessor();
-            services.AddScoped<IIdentityService, IdentityService>();
+            services.AddTransient<IIdentityService, IdentityService>();
             services.Configure(configureOptions);
             return services;
         }
 
         private static void CheckAndSetupConnection(DbContextOptionsBuilder options, IdentityDatabase db)
         {
-            var prov = db.Privider;
+            var prov = db.Provider;
             if (prov is SqlServerProvider)
                 options.UseSqlServer(db.ConnectionString);
             if (prov is MySqlProvider)

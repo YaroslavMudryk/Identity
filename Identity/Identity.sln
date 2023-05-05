@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33627.172
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Identity", "Identity.csproj", "{EDBFF627-C78E-487E-B59F-3FD721207AC0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Identity", "Identity.csproj", "{EDBFF627-C78E-487E-B59F-3FD721207AC0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Identity.Sample", "..\Identity.Sample\Identity.Sample.csproj", "{1FA73F65-FC7B-417F-A6C9-63731BBFD070}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{EDBFF627-C78E-487E-B59F-3FD721207AC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EDBFF627-C78E-487E-B59F-3FD721207AC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EDBFF627-C78E-487E-B59F-3FD721207AC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FA73F65-FC7B-417F-A6C9-63731BBFD070}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FA73F65-FC7B-417F-A6C9-63731BBFD070}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FA73F65-FC7B-417F-A6C9-63731BBFD070}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FA73F65-FC7B-417F-A6C9-63731BBFD070}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

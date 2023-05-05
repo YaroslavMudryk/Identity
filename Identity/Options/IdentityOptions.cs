@@ -55,6 +55,6 @@ namespace Identity.Options
     public class IdentityDatabase
     {
         public string ConnectionString { get; set; }
-        public IDbProvider Privider { get; set; }
+        public IDbProvider Provider { get; set; }
     }
 }

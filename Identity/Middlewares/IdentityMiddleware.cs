@@ -21,7 +21,6 @@ namespace Identity.Middlewares
             _routes = options.Value.Routes;
             _features = options.Value.Features;
             _account = options.Value.Account;
-            SetupDefaultRoutesIfNeeded();
         }
 
         public async Task InvokeAsync(HttpContext httpContext)
@@ -35,12 +34,6 @@ namespace Identity.Middlewares
             {
                 await _next.Invoke(httpContext);
             }
-        }
-
-
-        private void SetupDefaultRoutesIfNeeded()
-        {
-            _routes.RefreshRoute = _routes.RefreshRoute ?? EndpointsConstants.RefreshEndpoint;
         }
     }
 }
