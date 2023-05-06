@@ -8,7 +8,6 @@ namespace Identity.Dtos
         [Required, EmailAddress, StringLength(200, MinimumLength = 5)]
         public string Login { get; set; }
         [Required]
-        [RegularExpression(RegexTemplate.Password.Regex, ErrorMessage = RegexTemplate.Password.ErrorMessage)]
         public string Password { get; set; }
         [Required]
         public string Lang { get; set; }
