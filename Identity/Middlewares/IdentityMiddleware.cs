@@ -1,5 +1,4 @@
-﻿using Identity.Constants;
-using Identity.Options;
+﻿using Identity.Options;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 

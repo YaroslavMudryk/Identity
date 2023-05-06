@@ -2,9 +2,10 @@
 using Identity.Dtos;
 using Identity.Helpers;
 using Identity.Models;
+using Identity.Options;
 using Identity.Services.Interfaces;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -14,6 +15,7 @@ namespace Identity.Services.Implementations
     public class TokenService : ITokenService
     {
         private readonly IdentityContext _db;
+        private readonly JwtTokenOptions _tokenOptions;
         public TokenService(IdentityContext db)
         {
             _db = db;
@@ -60,14 +62,14 @@ namespace Identity.Services.Implementations
 
 
             var now = DateTime.Now;
-            var expiredAt = now.AddMinutes(TokenOptions.LifeTimeInMinutes);
+            var expiredAt = now.AddMinutes(_tokenOptions.LifeTimeInMinutes);
             var jwt = new JwtSecurityToken(
-                issuer: TokenOptions.Issuer,
-                audience: TokenOptions.Audience,
+                issuer: _tokenOptions.Issuer,
+                audience: _tokenOptions.Audience,
                 notBefore: now,
                 claims: claimsIdentity.Claims,
                 expires: expiredAt,
-                signingCredentials: new SigningCredentials(TokenOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
+                signingCredentials: new SigningCredentials(_tokenOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
 
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
 

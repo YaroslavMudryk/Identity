@@ -1,6 +1,8 @@
 ﻿using Identity.Helpers;
+using Identity.Options;
 using Identity.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Options;
 
 namespace Identity.Services.Implementations
 {

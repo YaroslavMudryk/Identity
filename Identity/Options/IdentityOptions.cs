@@ -1,10 +1,14 @@
 ﻿using Identity.Constants;
 using Identity.Db.Providers;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace Identity.Options
 {
     public class IdentityOptions
     {
+        public JwtTokenOptions Token { get; }
+            = new JwtTokenOptions();
         public IdentityRoutes Routes { get; }
             = new IdentityRoutes();
 
@@ -56,5 +60,17 @@ namespace Identity.Options
     {
         public string ConnectionString { get; set; }
         public IDbProvider Provider { get; set; }
+    }
+
+    public class JwtTokenOptions
+    {
+        public string Audience { get; set; }
+        public string Issuer { get; set; }
+        public int LifeTimeInMinutes { get; set; }
+
+
+        private string SecretKey = "49f1df0cefdc05744f90b3fdc246ecc7dd372ca3016e22418b66e632f1744622";
+        public SymmetricSecurityKey GetSymmetricSecurityKey()
+            => new SymmetricSecurityKey(Encoding.ASCII.GetBytes(SecretKey));
     }
 }

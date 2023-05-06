@@ -18,7 +18,9 @@ namespace Identity.Sample
                 options.Routes.RefreshRoute = "/api/v1/refresh";
                 options.Features.IsAvailableRefreshToken = true;
 
-
+                options.Token.Issuer = "Identity ID";
+                options.Token.Audience = "Identity Client";
+                options.Token.LifeTimeInMinutes = 180;
 
             }, new Options.IdentityDatabase
             {
