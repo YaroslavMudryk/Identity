@@ -2,6 +2,11 @@
 {
     public interface IIdentityService
     {
-        Task<string> GetCurrentTokenAsync();
+        string GetUserId();
+        string GetIP();
+        bool IsAdmin();
+        Guid GetCurrentSessionId();
+        IEnumerable<string> GetRoles();
+        string GetBearerToken();
     }
 }
