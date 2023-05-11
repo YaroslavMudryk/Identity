@@ -1,4 +1,5 @@
 ﻿using Identity.Options;
+using Identity.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 
@@ -22,7 +23,7 @@ namespace Identity.Middlewares
             _account = options.Value.Account;
         }
 
-        public async Task InvokeAsync(HttpContext httpContext)
+        public async Task InvokeAsync(HttpContext httpContext, IIdentityService identityService, IAppService appService)
         {
             if (_features.IsAvailableRefreshToken && httpContext.Request.Path == _routes.RefreshRoute)
             {

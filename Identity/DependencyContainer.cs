@@ -18,7 +18,8 @@ namespace Identity
             });
 
             services.AddHttpContextAccessor();
-            services.AddTransient<IIdentityService, HttpIdentityService>();
+            services.AddScoped<IIdentityService, HttpIdentityService>();
+            services.AddScoped<IAppService, AppService>();
             services.Configure(configureOptions);
             return services;
         }

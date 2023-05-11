@@ -28,10 +28,6 @@ namespace Identity.Services.Implementations
             if (appToChangeSecret == null)
                 return Result<AppSecretViewModel>.NotFound("App not found");
 
-            if (appToChangeSecret.IsDeleted)
-                if (!_identityService.IsAdmin())
-                    return Result<AppSecretViewModel>.Error("App deleted");
-
             if (!_identityService.IsAdmin())
                 if (appToChangeSecret.CreatedBy != userId)
                     return Result<AppSecretViewModel>.Forbiden();
@@ -119,10 +115,6 @@ namespace Identity.Services.Implementations
             if (app == null)
                 return Result<AppViewModel>.NotFound("App not found");
 
-            if (app.IsDeleted)
-                if (!_identityService.IsAdmin())
-                    return Result<AppViewModel>.Error("App deleted");
-
             if (!_identityService.IsAdmin())
                 if (app.CreatedBy != userId)
                     return Result<AppViewModel>.Forbiden();
@@ -139,10 +131,6 @@ namespace Identity.Services.Implementations
             if (app == null)
                 return Result<AppSecretViewModel>.NotFound("App not found");
 
-            if (app.IsDeleted)
-                if (!_identityService.IsAdmin())
-                    return Result<AppSecretViewModel>.Error("App deleted");
-
             if (!_identityService.IsAdmin())
                 if (app.CreatedBy != userId)
                     return Result<AppSecretViewModel>.Forbiden();
@@ -158,7 +146,7 @@ namespace Identity.Services.Implementations
             var query = (IQueryable<App>)_db.Apps;
 
             if (!isAdmin)
-                query = query.Where(s => !s.IsDeleted);
+                query = query.Where(s => s.CreatedBy == userId);
 
             var apps = await query.OrderByDescending(s => s.CreatedAt).ToListAsync();
 
@@ -174,10 +162,6 @@ namespace Identity.Services.Implementations
 
             if (appToUpdate == null)
                 return Result<AppViewModel>.NotFound("App not found");
-
-            if (appToUpdate.IsDeleted)
-                if (!_identityService.IsAdmin())
-                    return Result<AppViewModel>.Error("App deleted");
 
             if (!_identityService.IsAdmin())
                 if (appToUpdate.CreatedBy != userId)
@@ -207,10 +191,6 @@ namespace Identity.Services.Implementations
 
             if (appToUpdate == null)
                 return Result<bool>.NotFound("App not found");
-
-            if (appToUpdate.IsDeleted)
-                if (!_identityService.IsAdmin())
-                    return Result<bool>.Error("App deleted");
 
             if (!_identityService.IsAdmin())
                 if (appToUpdate.CreatedBy != userId)
