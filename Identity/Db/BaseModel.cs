@@ -23,4 +23,11 @@ namespace Identity.Db
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public T Id { get; set; }
     }
+
+    public class BaseSoftDeletableModel<T> : BaseModel<T>, ISoftDeletableEntity
+    {
+        public DateTime? DeletedAt { get; set; }
+        public bool IsDeleted { get; set; }
+        public string DeletedBy { get; set; }
+    }
 }

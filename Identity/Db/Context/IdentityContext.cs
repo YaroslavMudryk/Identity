@@ -1,13 +1,16 @@
-﻿using Identity.Models;
+﻿using Identity.Db.Helpers;
+using Identity.Models;
+using Identity.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace Identity.Db.Context
 {
     public class IdentityContext : DbContext
     {
-        public IdentityContext(DbContextOptions<IdentityContext> options) : base(options)
+        private readonly IIdentityService _identityService;
+        public IdentityContext(DbContextOptions<IdentityContext> options, IIdentityService identityService) : base(options)
         {
-
+            _identityService = identityService;
         }
 
         public DbSet<User> Users { get; set; }
@@ -26,5 +29,19 @@ namespace Identity.Db.Context
         public DbSet<Confirm> Confirms { get; set; }
         public DbSet<UserLogin> UserLogins { get; set; }
         public DbSet<MFA> MFAs { get; set; }
+
+        public override int SaveChanges()
+        {
+            this.ApplyAuditInfo(_identityService);
+
+            return base.SaveChanges();
+        }
+
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            this.ApplyAuditInfo(_identityService);
+
+            return base.SaveChangesAsync(cancellationToken);
+        }
     }
 }
