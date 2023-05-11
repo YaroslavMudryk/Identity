@@ -1,7 +1,9 @@
-﻿using Identity.Db.Helpers;
+﻿using Identity.Db.Configurations;
+using Identity.Db.Helpers;
 using Identity.Models;
 using Identity.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using XMessenger.Identity.Db.Configurations;
 
 namespace Identity.Db.Context
 {
@@ -10,6 +12,7 @@ namespace Identity.Db.Context
         private readonly IIdentityService _identityService;
         public IdentityContext(DbContextOptions<IdentityContext> options, IIdentityService identityService) : base(options)
         {
+            Database.EnsureCreated();
             _identityService = identityService;
         }
 
@@ -42,6 +45,15 @@ namespace Identity.Db.Context
             this.ApplyAuditInfo(_identityService);
 
             return base.SaveChangesAsync(cancellationToken);
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfiguration(new UserConfiguration());
+            modelBuilder.ApplyConfiguration(new SessionConfiguration());
+            modelBuilder.ApplyConfiguration(new RoleClaimConfiguration());
+            modelBuilder.ApplyConfiguration(new MFAConfiguration());
+            modelBuilder.ApplyConfiguration(new LoginAttemptConfiguration());
         }
     }
 }

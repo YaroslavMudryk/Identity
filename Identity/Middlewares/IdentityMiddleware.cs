@@ -1,4 +1,6 @@
-﻿using Identity.Options;
+﻿using Identity.Dtos;
+using Identity.Helpers;
+using Identity.Options;
 using Identity.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
@@ -25,10 +27,11 @@ namespace Identity.Middlewares
 
         public async Task InvokeAsync(HttpContext httpContext, IIdentityService identityService, IAppService appService)
         {
-            if (_features.IsAvailableRefreshToken && httpContext.Request.Path == _routes.RefreshRoute)
+            if (_features.IsAvailableRefreshToken && httpContext.Request.Path == _routes.RefreshRoute && httpContext.Request.Method == HttpMethods.Post)
             {
                 httpContext.Response.StatusCode = 200;
-                await httpContext.Response.WriteAsync("Success");
+
+                await httpContext.Response.WriteAsync("success");
             }
             else
             {

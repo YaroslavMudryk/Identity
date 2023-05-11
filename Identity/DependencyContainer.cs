@@ -3,6 +3,7 @@ using Identity.Db.Providers;
 using Identity.Options;
 using Identity.Services.Implementations;
 using Identity.Services.Interfaces;
+using Identity.SessionHandlers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -19,6 +20,7 @@ namespace Identity
 
             services.AddHttpContextAccessor();
             services.AddScoped<IIdentityService, HttpIdentityService>();
+            services.AddSingleton<ISessionManager, SessionManager>();
             services.AddScoped<IAppService, AppService>();
             services.Configure(configureOptions);
             return services;
