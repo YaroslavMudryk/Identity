@@ -29,8 +29,9 @@ namespace Identity.Middlewares
         {
             if (_features.IsAvailableRefreshToken && httpContext.Request.Path == _routes.RefreshRoute && httpContext.Request.Method == HttpMethods.Post)
             {
-                httpContext.Response.StatusCode = 200;
 
+                // handle refresh token
+                httpContext.Response.StatusCode = 200;
                 await httpContext.Response.WriteAsync("success");
             }
             else

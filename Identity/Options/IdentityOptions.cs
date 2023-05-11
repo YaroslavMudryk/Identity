@@ -21,12 +21,30 @@ namespace Identity.Options
 
     public class IdentityRoutes
     {
+        public string RegisterRoute { get; set; } = EndpointsConstants.SignupEndpoint;
+        public string LoginRoute { get; set; } = EndpointsConstants.LoginEndpoint;
+        public string Login2MfaRoute { get; set; } = EndpointsConstants.Login2MfaEndpoint;
         public string RefreshRoute { get; set; } = EndpointsConstants.RefreshEndpoint;
+        public string LogoutRoute { get; set; } = EndpointsConstants.LogoutEndpoint;
+        public string SendConfirmRoute { get; set; } = EndpointsConstants.SendConfirmEndpoint;
+        public string ConfirmRoute { get; set; } = EndpointsConstants.ConfirmEndpoint;
+        public string EnableMfaRoute { get; set; } = EndpointsConstants.EnableMfaEndpoint;
+        public string DisableMfaRoute { get; set; } = EndpointsConstants.DisableMfaEndpoint;
+        public string RestorePasswordRoute { get; set; } = EndpointsConstants.RestorePasswordEndpoint;
+        public string ChangeLoginRoute { get; set; } = EndpointsConstants.ChangeLoginEndpoint;
+        public string ChangePasswordRoute { get; set; } = EndpointsConstants.ChangePasswordEndpoint;
+        public string SessionsRoute { get; set; } = EndpointsConstants.SessionsEndpoint;
+        public string CloseSessionRoute { get; set; } = EndpointsConstants.CloseSessionEndpoint;
     }
 
     public class IdentityFeatures
     {
         public bool IsAvailableRefreshToken { get; set; } = true;
+        public bool IsAvailableConfirm { get; set; } = true;
+        public bool IsAvailableMfa { get; set; } = true;
+        public bool IsAvailableRestorePassword { get; set; } = true;
+        public bool IsAvailableSessions { get; set; } = true;
+        public bool IsAvailableChangeLoginAndPassword { get; set; } = true;
     }
 
     public class IdentityAccount
