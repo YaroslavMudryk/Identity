@@ -10,5 +10,6 @@
         void RemoveSessions(IEnumerable<Guid> sessionIds);
         void RemoveToken(string token);
         void RemoveRangeTokens(IEnumerable<string> tokens);
+        Dictionary<Guid, DateTime> GetLastAccessByUserId(int userId);
     }
 }

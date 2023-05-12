@@ -21,6 +21,9 @@ namespace Identity.SessionHandlers
         public void AddSession(SessionModel sessionModel)
         {
             var session = _sessions.FirstOrDefault(s => s.Id == sessionModel.Id);
+
+            sessionModel.LastAccess = DateTime.Now;
+
             if (session == null)
             {
                 _sessions.Add(sessionModel);
@@ -56,6 +59,8 @@ namespace Identity.SessionHandlers
                 session.Tokens.Remove(token);
                 return false;
             }
+
+            session.LastAccess = now;
 
             return true;
         }
@@ -113,11 +118,17 @@ namespace Identity.SessionHandlers
                 {
                     Id = session.Id,
                     RefreshToken = session.RefreshToken,
+                    LastAccess = session.LastAccess,
                     UserId = session.UserId,
                     Tokens = activeTokens.Where(s => s.SessionId == session.Id).Select(s => new TokenModel { Token = s.JwtToken, ExpiredAt = s.ExpiredAt }).ToList()
                 };
                 _sessions.Add(newSession);
             });
+        }
+
+        public Dictionary<Guid, DateTime> GetLastAccessByUserId(int userId)
+        {
+            return _sessions.ToDictionary(x => x.Id, x => x.LastAccess.Value);
         }
     }
 }

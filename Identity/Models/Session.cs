@@ -18,6 +18,7 @@ namespace Identity.Models
         public bool ViaMFA { get; set; }
         public SessionStatus Status { get; set; }
         public string Language { get; set; }
+        public DateTime LastAccess { get; set; }
         public DateTime? DeactivatedAt { get; set; }
         public Guid? DeactivatedBySessionId { get; set; }
         [Required, StringLength(50, MinimumLength = 40)]

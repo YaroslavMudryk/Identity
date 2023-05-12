@@ -11,6 +11,7 @@ namespace Identity.ViewModels
         public bool Current { get; set; }
         public SessionStatus Status { get; set; }
         public string Language { get; set; }
+        public DateTime LastAccess { get; set; }
         public AppInfo App { get; set; }
         public LocationInfo Location { get; set; }
         public ClientInfo Client { get; set; }
