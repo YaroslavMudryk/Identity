@@ -1,5 +1,4 @@
-﻿using Identity.Dtos;
-using Identity.Helpers;
+﻿using Identity.Helpers;
 using Identity.Options;
 using Identity.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
@@ -25,8 +24,14 @@ namespace Identity.Middlewares
             _account = options.Value.Account;
         }
 
-        public async Task InvokeAsync(HttpContext httpContext, IIdentityService identityService, IAppService appService)
+        public async Task InvokeAsync(HttpContext httpContext, IIdentityService identityService/*, IAppService appService*/)
         {
+            if (_routes.IsAvailableToDisplayRoutes && httpContext.Request.Path == "/identity/routes" && httpContext.Request.Method == HttpMethods.Get)
+            {
+                httpContext.Response.ContentType = "application/json; charset=utf-8";
+                await httpContext.Response.WriteAsync(_routes.ToJson());
+                return;
+            }
             if (_features.IsAvailableRefreshToken && httpContext.Request.Path == _routes.RefreshRoute && httpContext.Request.Method == HttpMethods.Post)
             {
 

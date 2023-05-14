@@ -21,6 +21,7 @@ namespace Identity.Options
 
     public class IdentityRoutes
     {
+        public bool IsAvailableToDisplayRoutes { get; set; } = true;
         public string RegisterRoute { get; set; } = EndpointsConstants.SignupEndpoint;
         public string LoginRoute { get; set; } = EndpointsConstants.LoginEndpoint;
         public string Login2MfaRoute { get; set; } = EndpointsConstants.Login2MfaEndpoint;

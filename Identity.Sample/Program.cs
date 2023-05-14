@@ -15,8 +15,14 @@ namespace Identity.Sample
 
             builder.Services.AddIdentityServices(options =>
             {
-                options.Routes.RefreshRoute = "/api/v1/refresh";
+                options.Features.IsAvailableRestorePassword = true;
+                options.Features.IsAvailableMfa = true;
+                options.Features.IsAvailableSessions = true;
+                options.Features.IsAvailableConfirm = true;
                 options.Features.IsAvailableRefreshToken = true;
+                options.Features.IsAvailableRestorePassword = true;
+
+                options.Routes.IsAvailableToDisplayRoutes = true;
 
                 options.Token.Issuer = "Identity ID";
                 options.Token.Audience = "Identity Client";
@@ -41,9 +47,9 @@ namespace Identity.Sample
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseIdentityHandler();
-
             app.MapControllers();
+
+            app.UseIdentityHandler();
 
             app.Run();
         }
