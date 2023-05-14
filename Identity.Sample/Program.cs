@@ -30,8 +30,8 @@ namespace Identity.Sample
 
             }, new Options.IdentityDatabase
             {
-                ConnectionString = "database.db3",
-                Provider = new SqliteProvider()
+                ConnectionString = "Server=(localdb)\\mssqllocaldb;Database=IdentityDb;Trusted_Connection=True;MultipleActiveResultSets=true",
+                Provider = new SqlServerProvider()
             });
 
             var app = builder.Build();

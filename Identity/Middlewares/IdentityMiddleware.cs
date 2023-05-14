@@ -24,7 +24,7 @@ namespace Identity.Middlewares
             _account = options.Value.Account;
         }
 
-        public async Task InvokeAsync(HttpContext httpContext, IIdentityService identityService/*, IAppService appService*/)
+        public async Task InvokeAsync(HttpContext httpContext, IIdentityService identityService, IAppService appService)
         {
             if (_routes.IsAvailableToDisplayRoutes && httpContext.Request.Path == "/identity/routes" && httpContext.Request.Method == HttpMethods.Get)
             {
