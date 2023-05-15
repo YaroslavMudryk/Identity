@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Identity.Helpers
+namespace Identity.Extensions
 {
     public static class StreamExtensions
     {

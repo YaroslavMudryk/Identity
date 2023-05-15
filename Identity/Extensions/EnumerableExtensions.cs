@@ -1,4 +1,4 @@
-﻿namespace Identity.Helpers
+﻿namespace Identity.Extensions
 {
     public static class EnumerableExtensions
     {

@@ -1,4 +1,4 @@
-﻿using Identity.Helpers;
+﻿using Identity.Extensions;
 using Identity.SessionHandlers;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;

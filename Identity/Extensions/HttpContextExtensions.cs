@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Features;
 
-namespace Identity.Helpers
+namespace Identity.Extensions
 {
     public static class HttpContextExtensions
     {

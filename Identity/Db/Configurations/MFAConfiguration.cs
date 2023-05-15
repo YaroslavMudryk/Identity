@@ -1,4 +1,4 @@
-﻿using Identity.Helpers;
+﻿using Identity.Extensions;
 using Identity.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

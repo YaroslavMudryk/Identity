@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Identity.Helpers
+namespace Identity.Extensions
 {
     public static class JsonExtension
     {

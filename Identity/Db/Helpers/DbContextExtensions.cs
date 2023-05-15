@@ -1,4 +1,5 @@
-﻿using Identity.Helpers;
+﻿using Identity.Extensions;
+using Identity.Helpers;
 using Identity.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
