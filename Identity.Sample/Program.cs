@@ -15,15 +15,6 @@ namespace Identity.Sample
 
             builder.Services.AddIdentityServices(options =>
             {
-                options.Features.IsAvailableRestorePassword = true;
-                options.Features.IsAvailableMfa = true;
-                options.Features.IsAvailableSessions = true;
-                options.Features.IsAvailableConfirm = true;
-                options.Features.IsAvailableRefreshToken = true;
-                options.Features.IsAvailableRestorePassword = true;
-
-                options.Routes.IsAvailableToDisplayRoutes = true;
-
                 options.Token.Issuer = "Identity ID";
                 options.Token.Audience = "Identity Client";
                 options.Token.LifeTimeInMinutes = 180;
