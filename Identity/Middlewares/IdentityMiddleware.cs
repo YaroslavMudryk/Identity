@@ -1,6 +1,7 @@
-﻿using Identity.Helpers;
+﻿using Identity.Extensions;
+using Identity.Handlers;
+using Identity.Helpers;
 using Identity.Options;
-using Identity.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 
@@ -13,6 +14,8 @@ namespace Identity.Middlewares
         private readonly IdentityRoutes _routes;
         private readonly IdentityAccount _account;
 
+        private readonly List<IHandler> _handlers;
+
         private readonly RequestDelegate _next;
 
         public IdentityMiddleware(RequestDelegate next, IOptions<IdentityOptions> options)
@@ -22,27 +25,26 @@ namespace Identity.Middlewares
             _routes = options.Value.Routes;
             _features = options.Value.Features;
             _account = options.Value.Account;
+
+            _handlers = options.Value.BuildHandlers();
         }
 
-        public async Task InvokeAsync(HttpContext httpContext, IIdentityService identityService, IAppService appService)
+        public async Task InvokeAsync(HttpContext httpContext)
         {
-            if (_routes.IsAvailableToDisplayRoutes && httpContext.Request.Path == "/identity/routes" && httpContext.Request.Method == HttpMethods.Get)
+            foreach (var handler in _handlers)
             {
-                httpContext.Response.ContentType = "application/json; charset=utf-8";
-                await httpContext.Response.WriteAsync(_routes.ToJson());
-                return;
-            }
-            if (_features.IsAvailableRefreshToken && httpContext.Request.Path == _routes.RefreshRoute && httpContext.Request.Method == HttpMethods.Post)
-            {
+                if (handler.CanHandle(httpContext))
+                {
+                    var resposne = await handler.HandleAsync(httpContext);
 
-                // handle refresh token
-                httpContext.Response.StatusCode = 200;
-                await httpContext.Response.WriteAsync("success");
+                    httpContext.Response.ContentType = "application/json; charset=utf-8";
+                    httpContext.Response.StatusCode = resposne.Item2;
+                    await httpContext.Response.WriteAsync(resposne.Item1.ToJson());
+                    return;
+                }
             }
-            else
-            {
-                await _next.Invoke(httpContext);
-            }
+
+            await _next.Invoke(httpContext);
         }
     }
 }

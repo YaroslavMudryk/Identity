@@ -11,10 +11,9 @@
         public static string ConfirmEndpoint { get; set; } = "/api/v1/identity/confirm";
         public static string EnableMfaEndpoint { get; set; } = "/api/v1/identity/2mfa";
         public static string DisableMfaEndpoint { get; set; } = "/api/v1/identity/2mfa/{code}";
-        public static string RestorePasswordEndpoint { get; set; } = "/api/v1/identity/restore-password";
         public static string ChangePasswordEndpoint { get; set; } = "/api/v1/identity/change-password";
         public static string ChangeLoginEndpoint { get; set; } = "/api/v1/identity/change-login";
-        public static string SessionsEndpoint { get; set; } = "api/v1/identity/sessions/{page}";
-        public static string CloseSessionEndpoint { get; set; } = "api/v1/identity/sessions/{id}";
+        public static string SessionsEndpoint { get; set; } = "/api/v1/identity/sessions";
+        public static string CloseSessionEndpoint { get; set; } = "/api/v1/identity/sessions/{id}";
     }
 }

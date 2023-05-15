@@ -31,7 +31,6 @@ namespace Identity.Options
         public string ConfirmRoute { get; set; } = EndpointsConstants.ConfirmEndpoint;
         public string EnableMfaRoute { get; set; } = EndpointsConstants.EnableMfaEndpoint;
         public string DisableMfaRoute { get; set; } = EndpointsConstants.DisableMfaEndpoint;
-        public string RestorePasswordRoute { get; set; } = EndpointsConstants.RestorePasswordEndpoint;
         public string ChangeLoginRoute { get; set; } = EndpointsConstants.ChangeLoginEndpoint;
         public string ChangePasswordRoute { get; set; } = EndpointsConstants.ChangePasswordEndpoint;
         public string SessionsRoute { get; set; } = EndpointsConstants.SessionsEndpoint;
