@@ -13,7 +13,7 @@ namespace Identity.Handlers
         public async Task<(APIResponse, int)> HandleAsync(HttpContext httpContext)
         {
             //ToDo will be implemented later
-            return (new APIResponse(), 200);
+            return (APIResponse.OK(), 200);
         }
 
         public ConfirmHandler(IdentityOptions identityOptions)
