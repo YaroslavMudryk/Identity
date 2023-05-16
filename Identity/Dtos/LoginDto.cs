@@ -11,7 +11,7 @@ namespace Identity.Dtos
         public string Password { get; set; }
         [Required]
         public string Lang { get; set; }
-        public ClientInfo Client { get; set; }
+        public ClientInfo Device { get; set; }
         public AppLoginDto App { get; set; }
     }
 }

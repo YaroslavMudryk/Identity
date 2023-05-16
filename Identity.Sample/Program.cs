@@ -1,5 +1,5 @@
-
 using Identity.Db.Providers;
+using Identity.Options;
 
 namespace Identity.Sample
 {
@@ -18,8 +18,7 @@ namespace Identity.Sample
                 options.Token.Issuer = "Identity ID";
                 options.Token.Audience = "Identity Client";
                 options.Token.LifeTimeInMinutes = 180;
-
-            }, new Options.IdentityDatabase
+            }, new IdentityDatabase
             {
                 ConnectionString = "Server=(localdb)\\mssqllocaldb;Database=IdentityDb;Trusted_Connection=True;MultipleActiveResultSets=true",
                 Provider = new SqlServerProvider()

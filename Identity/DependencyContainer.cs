@@ -1,4 +1,5 @@
-﻿using Identity.Db.Context;
+﻿using Extensions.DeviceDetector;
+using Identity.Db.Context;
 using Identity.Db.Providers;
 using Identity.Options;
 using Identity.Services.Implementations;
@@ -19,9 +20,17 @@ namespace Identity
             });
 
             services.AddHttpContextAccessor();
-            services.AddScoped<IIdentityService, HttpIdentityService>();
+            services.AddDeviceDetector();
             services.AddSingleton<ISessionManager, SessionManager>();
+
             services.AddScoped<IAppService, AppService>();
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IIdentityService, HttpIdentityService>();
+            services.AddScoped<ILocationService, LocationService>();
+            services.AddScoped<IRoleService, RoleService>();
+            services.AddScoped<ISessionService, SessionService>();
+            services.AddScoped<ITokenService, TokenService>();
+
             services.Configure(configureOptions);
             return services;
         }

@@ -1,4 +1,6 @@
-﻿namespace Identity.Models.Response
+﻿using static System.Runtime.InteropServices.JavaScript.JSType;
+
+namespace Identity.Models.Response
 {
     public class APIResponse
     {
@@ -8,7 +10,7 @@
 
         public APIResponse()
         {
-            
+
         }
 
         public APIResponse(bool ok, string error, object data)
@@ -31,6 +33,16 @@
         public static APIResponse Custom(bool ok, string error, object data)
         {
             return new APIResponse(ok, error, data);
+        }
+
+        public static APIResponse NewData(object data)
+        {
+            return new APIResponse(true, null, data);
+        }
+
+        public static APIResponse Unauthorized(string error = "Unauthorized access")
+        {
+            return new APIResponse(false, error, null);
         }
     }
 }

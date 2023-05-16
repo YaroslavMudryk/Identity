@@ -6,9 +6,10 @@ namespace Identity.Handlers
 {
     public class CloseSessionHandler : IHandler
     {
-        public string Method { get; set; } = HttpMethods.Get;
+        public string Method { get; set; } = HttpMethods.Delete;
         public string Route { get; set; }
         public bool IsAvailable { get; set; }
+        public bool ProtectedRoute { get; set; }
 
         public async Task<(APIResponse, int)> HandleAsync(HttpContext httpContext)
         {
@@ -20,6 +21,7 @@ namespace Identity.Handlers
         {
             Route = identityOptions.Routes.CloseSessionRoute;
             IsAvailable = identityOptions.Features.IsAvailableSessions;
+            ProtectedRoute = false;
         }
     }
 }

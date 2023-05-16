@@ -9,6 +9,7 @@ namespace Identity.Handlers
         public string Method { get; set; } = HttpMethods.Post;
         public string Route { get; set; }
         public bool IsAvailable { get; set; }
+        public bool ProtectedRoute { get; set; }
 
         public async Task<(APIResponse, int)> HandleAsync(HttpContext httpContext)
         {
@@ -20,6 +21,7 @@ namespace Identity.Handlers
         {
             Route = identityOptions.Routes.EnableMfaRoute;
             IsAvailable = identityOptions.Features.IsAvailableMfa;
+            ProtectedRoute = true;
         }
     }
 }

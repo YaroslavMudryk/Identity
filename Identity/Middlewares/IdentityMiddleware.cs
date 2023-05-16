@@ -1,6 +1,6 @@
 ﻿using Identity.Extensions;
 using Identity.Handlers;
-using Identity.Helpers;
+using Identity.Models.Response;
 using Identity.Options;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
@@ -35,9 +35,17 @@ namespace Identity.Middlewares
             {
                 if (handler.CanHandle(httpContext))
                 {
+                    httpContext.Response.ContentType = "application/json; charset=utf-8";
+
+                    if (handler.ProtectedRoute && !httpContext.User.Identity.IsAuthenticated)
+                    {
+                        httpContext.Response.StatusCode = 401;
+                        await httpContext.Response.WriteAsync(APIResponse.Unauthorized().ToJson());
+                        return;
+                    }
+
                     var resposne = await handler.HandleAsync(httpContext);
 
-                    httpContext.Response.ContentType = "application/json; charset=utf-8";
                     httpContext.Response.StatusCode = resposne.Item2;
                     await httpContext.Response.WriteAsync(resposne.Item1.ToJson());
                     return;

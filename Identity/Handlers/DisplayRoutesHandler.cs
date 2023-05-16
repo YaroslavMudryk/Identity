@@ -11,6 +11,7 @@ namespace Identity.Handlers
         public string Method { get; set; } = HttpMethods.Get;
         public string Route { get; set; }
         public bool IsAvailable { get; set; }
+        public bool ProtectedRoute { get; set; }
 
         public async Task<(APIResponse, int)> HandleAsync(HttpContext httpContext)
         {
@@ -27,6 +28,7 @@ namespace Identity.Handlers
             Route = "/identity/routes";
             IsAvailable = identityOptions.Routes.IsAvailableToDisplayRoutes;
             _routes = identityOptions.Routes;
+            ProtectedRoute = false;
         }
     }
 }

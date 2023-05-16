@@ -14,7 +14,7 @@ namespace Identity.ViewModels
         public DateTime LastAccess { get; set; }
         public AppInfo App { get; set; }
         public LocationInfo Location { get; set; }
-        public ClientInfo Client { get; set; }
+        public ClientInfo Device { get; set; }
         public DateTime? DeactivatedAt { get; set; }
     }
 }

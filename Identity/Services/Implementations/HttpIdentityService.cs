@@ -1,8 +1,6 @@
 ﻿using Identity.Helpers;
-using Identity.Options;
 using Identity.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Options;
 
 namespace Identity.Services.Implementations
 {
@@ -14,12 +12,12 @@ namespace Identity.Services.Implementations
             _httpContext = httpContextAccessor.HttpContext;
         }
 
-        public string GetUserId()
+        public int GetUserId()
         {
             if (!IsAuth())
-                return null;
+                return 0;
             var claim = _httpContext.User.Claims.FirstOrDefault(s => s.Type == ConstantsClaimTypes.UserId);
-            return claim.Value;
+            return Convert.ToInt32(claim.Value);
         }
 
         public string GetIP()

@@ -2,7 +2,7 @@
 {
     public interface IIdentityService
     {
-        string GetUserId();
+        int GetUserId();
         string GetIP();
         bool IsAdmin();
         Guid GetCurrentSessionId();

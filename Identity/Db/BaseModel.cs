@@ -6,12 +6,12 @@ namespace Identity.Db
     public class BaseModel : IAuditEntity
     {
         public DateTime CreatedAt { get; set; }
-        public string CreatedBy { get; set; }
+        public int CreatedBy { get; set; }
         public string CreatedIP { get; set; }
 
 
         public DateTime? UpdatedAt { get; set; }
-        public string UpdatedBy { get; set; }
+        public int UpdatedBy { get; set; }
         public string UpdatedIP { get; set; }
 
         public int Version { get; set; }
@@ -28,6 +28,6 @@ namespace Identity.Db
     {
         public DateTime? DeletedAt { get; set; }
         public bool IsDeleted { get; set; }
-        public string DeletedBy { get; set; }
+        public int DeletedBy { get; set; }
     }
 }
