@@ -17,9 +17,9 @@ namespace Identity.Middlewares
 
         public async Task InvokeAsync(HttpContext httpContext)
         {
-            var token = await httpContext.GetTokenAsync("access_token");
             if (httpContext.IsAuthenticationRequired())
             {
+                var token = await httpContext.GetTokenAsync("access_token");
                 if (token == null || !_sessionManager.IsActiveSession(token))
                 {
                     httpContext.Response.StatusCode = 401;

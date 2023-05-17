@@ -6,21 +6,25 @@ using Identity.Dtos;
 using Identity.Extensions;
 using Identity.Helpers;
 using Identity.Models;
+using Identity.Options;
 using Identity.Services.Interfaces;
 using Identity.SessionHandlers;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using System.Text.RegularExpressions;
 
 namespace Identity.Services.Implementations
 {
     public class AuthService : IAuthService
     {
         private readonly IdentityContext _db;
+        private readonly IdentityOptions _identityOptions;
         private readonly IDetector _detector;
         private readonly IIdentityService _identityService;
         private readonly ILocationService _locationService;
         private readonly ITokenService _tokenService;
         private readonly ISessionManager _sessionManager;
-        public AuthService(IdentityContext db, IDetector detector, IIdentityService identityService, ILocationService locationService, ITokenService tokenService, ISessionManager sessionManager)
+        public AuthService(IdentityContext db, IDetector detector, IIdentityService identityService, ILocationService locationService, ITokenService tokenService, ISessionManager sessionManager, IOptions<IdentityOptions> options)
         {
             _db = db;
             _detector = detector;
@@ -28,6 +32,7 @@ namespace Identity.Services.Implementations
             _locationService = locationService;
             _tokenService = tokenService;
             _sessionManager = sessionManager;
+            _identityOptions = options.Value;
         }
 
         public async Task<Result<bool>> ChangeLoginAsync(NewLoginDto loginDto)
@@ -472,7 +477,7 @@ namespace Identity.Services.Implementations
                 return new Result<JwtTokenDto>(false, false, false, false, "Need MFA", null, new JwtTokenDto
                 {
                     SessionId = session.Id.ToString()
-                }, null);
+                });
             }
 
             var jwtToken = await _tokenService.GetUserTokenAsync(new UserTokenDto
@@ -593,15 +598,10 @@ namespace Identity.Services.Implementations
 
             var now = DateTime.Now;
 
-            var newConfirm = new Confirm
-            {
-                ActiveFrom = now,
-                ActiveTo = now.AddDays(1),
-                Code = Generator.GetConfirmCode(),
-                Type = ConfirmType.Account,
-                IsActivated = false,
-                ActivetedAt = null
-            };
+            var res = Regex.IsMatch(registerDto.Password, _identityOptions.Account.Password.RegexTemplate);
+
+            if (!res)
+                return Result<bool>.Error(_identityOptions.Account.Password.RegexErrorMessage);
 
             var passwordHash = registerDto.Password.GeneratePasswordHash();
 
@@ -623,14 +623,26 @@ namespace Identity.Services.Implementations
                 Login = registerDto.Login,
                 PasswordHash = passwordHash,
                 Email = registerDto.Login,
-                IsConfirmed = false,
+                IsConfirmed = _identityOptions.Features.IsAvailableConfirm ? false : true,
                 AccessFailedCount = 0,
                 LockoutEnabled = true,
                 LockoutEnd = null,
                 MFA = false,
                 MFASecretKey = null,
                 Name = $"{registerDto.FirstName} {registerDto.LastName}",
-                Confirms = new List<Confirm> { newConfirm },
+                Confirms = _identityOptions.Features.IsAvailableConfirm ?
+                    new List<Confirm>
+                    {
+                        new Confirm
+                        {
+                            ActiveFrom = now,
+                            ActiveTo = now.AddDays(1),
+                            Code = Generator.GetConfirmCode(),
+                            Type = ConfirmType.Account,
+                            IsActivated = false,
+                            ActivetedAt = null
+                        }
+                    } : null,
                 Passwords = new List<Password> { newPassword }
             };
 
@@ -643,14 +655,9 @@ namespace Identity.Services.Implementations
                 ActiveTo = now.AddYears(10),
             };
 
-            //ToDo: add user notification settings as json field
-
             await _db.Users.AddAsync(newUser);
             await _db.UserRoles.AddAsync(newUserRole);
             await _db.SaveChangesAsync();
-
-
-            //ToDo: send confirmation on email
 
             return Result<bool>.Success();
         }

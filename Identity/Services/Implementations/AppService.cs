@@ -101,9 +101,7 @@ namespace Identity.Services.Implementations
 
             var appsToView = apps.Adapt<List<AppViewModel>>();
 
-            var totalApps = await _db.Apps.CountAsync();
-
-            return Result<List<AppViewModel>>.SuccessList(appsToView, Meta.FromMeta(totalApps, page));
+            return Result<List<AppViewModel>>.SuccessList(appsToView);
         }
 
         public async Task<Result<AppViewModel>> GetAppByIdAsync(int id)

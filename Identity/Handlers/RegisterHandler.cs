@@ -1,6 +1,10 @@
-﻿using Identity.Models.Response;
+﻿using Identity.Dtos;
+using Identity.Extensions;
+using Identity.Models.Response;
 using Identity.Options;
+using Identity.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Identity.Handlers
 {
@@ -13,8 +17,13 @@ namespace Identity.Handlers
 
         public async Task<(APIResponse, int)> HandleAsync(HttpContext httpContext)
         {
-            //ToDo will be implemented later
-            return (APIResponse.OK(), 200);
+            var authService = httpContext.RequestServices.GetRequiredService<IAuthService>();
+
+            var registerDto = await httpContext.Request.Body.GetBodyAsync<RegisterDto>();
+
+            var result = await authService.RegisterAsync(registerDto);
+
+            return result.MapToResponse();
         }
 
         public RegisterHandler(IdentityOptions identityOptions)

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using System.Text.RegularExpressions;
 
 namespace Identity.Extensions
 {
@@ -23,14 +24,18 @@ namespace Identity.Extensions
             return Convert.ToInt32(s);
         }
 
-        public static bool IsValidPath(this PathString path, string route)
+        public static bool IsValidPath(this PathString path, string template)
         {
-            return true;
-        }
+            var devider = "{0}";
 
-        public static T ExtractFromRoute<T>(this PathString path, string route)
-        {
-            return default(T);
+            if (!template.Contains(devider))
+                return path.Value == template;
+
+            var parts = template.Split(devider);
+
+            var res = path.Value.Replace(parts[0], string.Empty);
+
+            return !res.Contains("/");
         }
     }
 }

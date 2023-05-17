@@ -68,8 +68,6 @@ namespace Identity.Services.Implementations
             query = query.OrderByDescending(x => x.CreatedAt);
             var sessions = await query.ToListAsync();
 
-            var totalSessions = await _db.Sessions.AsNoTracking().CountAsync(x => x.UserId == userId && isActive ? x.Status == SessionStatus.Active || x.Status == SessionStatus.New : x.Status == SessionStatus.Close);
-
             var sessionsToView = sessions.MapToView(currentSessionId);
 
             var lastAccessTime = _sessionManager.GetLastAccessByUserId(userId);
@@ -79,7 +77,7 @@ namespace Identity.Services.Implementations
                 session.LastAccess = lastAccessTime[session.Id];
             });
 
-            return Result<List<SessionViewModel>>.SuccessList(sessionsToView, Meta.FromMeta(totalSessions, page));
+            return Result<List<SessionViewModel>>.SuccessList(sessionsToView);
         }
     }
 }

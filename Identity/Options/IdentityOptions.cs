@@ -2,6 +2,7 @@
 using Identity.Db.Providers;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Identity.Options
 {
@@ -66,12 +67,8 @@ namespace Identity.Options
 
     public class IdentityPassword
     {
-        public int MinSize { get; set; } = 4;
-        public int MaxSize { get; set; } = 25;
-        public bool MandatoryCapitalCharecter { get; set; } = true;
-        public bool MandatoryNumbers { get; set; } = true;
-        public bool AllowPartOfEmail { get; set; } = false;
-        public string AllowSpecialCharacters { get; set; } = ".,/?|%$#*&_";
+        public string RegexTemplate { get; set; } = @"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$";
+        public string RegexErrorMessage { get; set; } = "Invalid password";
     }
 
     public class IdentityDatabase

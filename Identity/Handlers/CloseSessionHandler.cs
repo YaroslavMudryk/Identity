@@ -21,7 +21,7 @@ namespace Identity.Handlers
         {
             Route = identityOptions.Routes.CloseSessionRoute;
             IsAvailable = identityOptions.Features.IsAvailableSessions;
-            ProtectedRoute = false;
+            ProtectedRoute = true;
         }
     }
 }

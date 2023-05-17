@@ -3,7 +3,7 @@
     public class Result<T>
     {
         #region ctors
-        public Result(bool success, bool isCreated, bool notFound, bool forbid, string error, Exception exception, T data, Meta meta)
+        public Result(bool success, bool isCreated, bool notFound, bool forbid, string error, Exception exception, T data)
         {
             IsSuccess = success;
             IsCreated = isCreated;
@@ -13,7 +13,6 @@
             ErrorMessage = error;
             ExceptionType = exception;
             Data = data;
-            Meta = meta;
         }
         public Result()
         {
@@ -25,56 +24,56 @@
 
         public static Result<T> Created(T data)
         {
-            return new Result<T>(true, true, false, false, null, null, data, null);
+            return new Result<T>(true, true, false, false, null, null, data);
         }
 
         public static Result<T> Created()
         {
-            return new Result<T>(true, true, false, false, null, null, default, null);
+            return new Result<T>(true, true, false, false, null, null, default);
         }
 
-        public static Result<T> CreatedList(T data, Meta meta)
+        public static Result<T> CreatedList(T data)
         {
-            return new Result<T>(true, true, false, false, null, null, data, meta);
+            return new Result<T>(true, true, false, false, null, null, data);
         }
 
         public static Result<T> Success()
         {
-            return new Result<T>(true, false, false, false, null, null, default, null);
+            return new Result<T>(true, false, false, false, null, null, default);
         }
 
         public static Result<T> SuccessWithData(T data)
         {
             if (data == null)
                 return Success();
-            return new Result<T>(true, false, false, false, null, null, data, null);
+            return new Result<T>(true, false, false, false, null, null, data);
         }
 
-        public static Result<T> SuccessList(T data, Meta meta = null)
+        public static Result<T> SuccessList(T data)
         {
             if (data == null)
                 return Success();
-            return new Result<T>(true, false, false, false, null, null, data, meta);
+            return new Result<T>(true, false, false, false, null, null, data);
         }
 
         public static Result<T> NotFound(string error = "Resource not found")
         {
-            return new Result<T>(false, false, true, false, error, null, default, null);
+            return new Result<T>(false, false, true, false, error, null, default);
         }
 
         public static Result<T> Error(string error = "Resource not found")
         {
-            return new Result<T>(false, false, false, false, error, null, default, null);
+            return new Result<T>(false, false, false, false, error, null, default);
         }
 
         public static Result<T> Forbiden(string error = "Access denited")
         {
-            return new Result<T>(false, false, false, true, error, null, default, null);
+            return new Result<T>(false, false, false, true, error, null, default);
         }
 
         public static Result<T> Exception(Exception exception)
         {
-            return new Result<T>(false, false, false, false, null, exception, default, null);
+            return new Result<T>(false, false, false, false, null, exception, default);
         }
 
         #endregion
@@ -89,13 +88,12 @@
         public string ErrorMessage { get; set; }
         public Exception ExceptionType { get; set; }
         public T Data { get; set; }
-        public Meta Meta { get; set; }
 
         #endregion
 
-        public Result<U> MapToNew<U>(U data, Meta meta = null)
+        public Result<U> MapToNew<U>(U data)
         {
-            return new Result<U>(IsSuccess, IsCreated, IsNotFound, IsForbid, ErrorMessage, ExceptionType, data, meta);
+            return new Result<U>(IsSuccess, IsCreated, IsNotFound, IsForbid, ErrorMessage, ExceptionType, data);
         }
     }
 }
