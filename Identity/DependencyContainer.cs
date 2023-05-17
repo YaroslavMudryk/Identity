@@ -2,6 +2,7 @@
 using Identity.Db.Context;
 using Identity.Db.Providers;
 using Identity.Options;
+using Identity.Seeder;
 using Identity.Services.Implementations;
 using Identity.Services.Interfaces;
 using Identity.SessionHandlers;
@@ -30,6 +31,8 @@ namespace Identity
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<ISessionService, SessionService>();
             services.AddScoped<ITokenService, TokenService>();
+
+            services.AddScoped<ISeederService, BaseSeederService>();
 
             services.Configure(configureOptions);
             return services;

@@ -36,6 +36,7 @@ namespace Identity.Options
         public string ChangePasswordRoute { get; set; } = EndpointsConstants.ChangePasswordEndpoint;
         public string SessionsRoute { get; set; } = EndpointsConstants.SessionsEndpoint;
         public string CloseSessionRoute { get; set; } = EndpointsConstants.CloseSessionEndpoint;
+        public string SeedSystemRoute { get; set; } = EndpointsConstants.SeedSystemEndpoint;
     }
 
     public class IdentityFeatures
@@ -46,6 +47,7 @@ namespace Identity.Options
         public bool IsAvailableRestorePassword { get; set; } = true;
         public bool IsAvailableSessions { get; set; } = true;
         public bool IsAvailableChangeLoginAndPassword { get; set; } = true;
+        public bool IsAvailableSeedSystem { get; set; } = true;
     }
 
     public class IdentityAccount

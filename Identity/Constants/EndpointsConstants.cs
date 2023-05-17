@@ -15,5 +15,7 @@
         public static string ChangeLoginEndpoint { get; set; } = "/api/v1/identity/change-login";
         public static string SessionsEndpoint { get; set; } = "/api/v1/identity/sessions";
         public static string CloseSessionEndpoint { get; set; } = "/api/v1/identity/sessions/{0}";
+
+        public static string SeedSystemEndpoint { get; set; } = "/system/seed";
     }
 }

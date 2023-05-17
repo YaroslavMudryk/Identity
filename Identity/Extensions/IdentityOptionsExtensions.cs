@@ -10,6 +10,7 @@ namespace Identity.Extensions
             var handlers = new List<IHandler>();
 
             handlers.Add(new DisplayRoutesHandler(identityOptions));
+            handlers.Add(new SeedSystemHandler(identityOptions));
 
             handlers.Add(new RegisterHandler(identityOptions));
             handlers.Add(new LoginHandler(identityOptions));
